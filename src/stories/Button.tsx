@@ -1,4 +1,5 @@
 import React from 'react';
+import './button.css';
 
 interface ButtonProps {
   /**
@@ -33,39 +34,19 @@ export const Button = ({
   label,
   ...props
 }: ButtonProps) => {
-  // Define base classes for all buttons
-  let baseClasses = 'rounded font-bold focus:outline-none focus:ring';
-
-  // Define size-specific classes
-  let sizeClasses;
-  switch (size) {
-    case 'small':
-      sizeClasses = 'text-sm px-3 py-2';
-      break;
-    case 'large':
-      sizeClasses = 'text-lg px-6 py-3';
-      break;
-    default:
-      // 'medium' size
-      sizeClasses = 'text-md px-5 py-2.5';
-  }
-
-  // Define classes for primary vs secondary buttons
-  let colorClasses = primary
-    ? 'bg-blue-500 hover:bg-blue-700 text-white'
-    : 'bg-gray-200 hover:bg-gray-400 text-black';
-
-  // Use backgroundColor prop if provided
-  const style = backgroundColor ? { backgroundColor } : {};
-
+  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
   return (
     <button
       type="button"
-      className={`${baseClasses} ${sizeClasses} ${colorClasses}`}
-      style={style}
+      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
       {...props}
     >
       {label}
+      <style jsx>{`
+        button {
+          background-color: ${backgroundColor};
+        }
+      `}</style>
     </button>
   );
 };
