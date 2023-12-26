@@ -1,11 +1,16 @@
-import React from 'react';
+// pages/index.tsx
+import { Card, CardProps } from '../components/Card';  // adjust the path accordingly
 
-const IndexPage = () => {
+export default function Home() {
+
+    const cardProps: CardProps = {
+        title: "Test Title",
+        description: "Test Description"
+    }
+
     return (
-        <div className="bg-red-600 text-white p-5">
-            <h1>Hello Next.js with Tailwind!</h1>
+        <div>
+            <Card {...cardProps} />
         </div>
     )
 }
-
-export default IndexPage
