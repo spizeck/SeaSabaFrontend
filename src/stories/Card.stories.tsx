@@ -1,19 +1,16 @@
 // src/stories/Card.stories.tsx
-import type {Meta, StoryObj} from '@storybook/react'
-
+import React from 'react'
+import {Meta} from '@storybook/react'
 import {Card, CardProps} from "../components/Card";
 
-const meta: Meta<typeof Card> = {
-    component: Card,
-}
+export default {
+  title: 'Components/Card',
+  component: Card
+} as Meta<CardProps>
 
-export default meta;
-
-type Story = StoryObj<typeof Card>
-
-export const Primary: Story = {
-    args: {
-        title: 'Title',
-        description: 'Description',
-    },
-}
+export const Example= {
+  args: {
+    title: 'Card Title',
+    description: 'Card Description',
+  },
+};
