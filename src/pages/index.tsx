@@ -1,16 +1,13 @@
 // pages/index.tsx
-import { Card, CardProps } from '../components/Card';  // adjust the path accordingly
+import React from 'react'
+import MainLayout from '@/layouts/MainLayout'
 
-export default function Home() {
-
-    const cardProps: CardProps = {
-        title: "Test Title",
-        description: "Test Description"
-    }
-
+const HomePage: React.FC = () => {
     return (
-        <div>
-            <Card {...cardProps} />
-        </div>
+        <MainLayout>
+            <h1>Home Page</h1>
+        </MainLayout>
     )
 }
+
+export default HomePage

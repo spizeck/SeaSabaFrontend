@@ -1,42 +1,44 @@
-import React from 'react';
-import Button from './Button';
+import React from 'react'
+import Image from 'next/image'
+import Link from "next/link"
+import {cn} from "@/lib/utils"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
 
-type User = {
-  name: string;
-};
+const Header: React.FC = () => {
 
-interface HeaderProps {
-  user?: User;
-  onLogin: () => void;
-  onLogout: () => void;
-  onCreateAccount: () => void;
+  return (
+    <header className='p-4 border-b-2'>
+      <div className='flex justify-between items-center'>
+        <div className="nav-logo">
+          <Image
+            src="/ColorLogo.png"
+            alt="logo"
+            width={250}
+            height={150}
+          />
+        </div>
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <NavigationMenuLink>Link </NavigationMenuLink>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+
+      </div>
+    </header>
+  )
 }
 
-export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => (
-  <header className="bg-gray-100 p-4">
-    <div className="flex justify-between items-center">
-      <div className="flex items-center">
-        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
-             className="text-gray-800 mr-2">
-          {/* SVG content unchanged */}
-        </svg>
-        <h1 className="text-xl font-bold text-gray-800">Acme</h1>
-      </div>
-      <div>
-        {user ? (
-          <>
-            <span className="text-sm text-gray-700 mr-4">
-              Welcome, <b>{user.name}</b>!
-            </span>
-            <Button label="Log out" onClick={onLogout} type="negative"/>
-          </>
-        ) : (
-          <>
-            <Button label="Log in" onClick={onLogin} type="primary" />
-            <Button label="Sign up" onClick={onCreateAccount} type="positive" />
-          </>
-        )}
-      </div>
-    </div>
-  </header>
-);
+export default Header
