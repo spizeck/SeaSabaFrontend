@@ -5,7 +5,7 @@ type User = {
   name: string;
 };
 
-export const Page: React.FC = () => {
+export const AdminLayout: React.FC = () => {
   const [user, setUser] = React.useState<User>();
 
   return (
