@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Link from "next/link"
 import {FaBars} from 'react-icons/fa'
@@ -11,6 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import {Button} from "@/components/ui/button"
+import {RegisterForm} from "@/components/forms/register"
 
 const Header: React.FC = () => {
 
@@ -35,17 +36,17 @@ const Header: React.FC = () => {
     if (isLoggedIn) {
       return (
         <>
-            <Sheet>
-              <SheetTrigger>
-                <Button variant="ghost">Preferences</Button>
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>User Preferences</SheetTitle>
-                  <SheetDescription>Manage your user preferences</SheetDescription>
-                </SheetHeader>
-              </SheetContent>
-            </Sheet>
+          <Sheet>
+            <SheetTrigger>
+              <Button variant="ghost">Preferences</Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>User Preferences</SheetTitle>
+                <SheetDescription>Manage your user preferences</SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
           <Button variant="ghost" onClick={() => {
           }}>Logout</Button>
         </>
@@ -53,28 +54,29 @@ const Header: React.FC = () => {
     }
     return (
       <>
-            <Sheet>
-              <SheetTrigger>
-                <Button variant="ghost">Register</Button>
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>User Registration</SheetTitle>
-                  <SheetDescription>Please fill in the following fields to register a new user</SheetDescription>
-                </SheetHeader>
-              </SheetContent>
-            </Sheet>
-            <Sheet>
-              <SheetTrigger>
-                <Button variant="ghost">Login</Button>
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>Please Log In</SheetTitle>
-                  <SheetDescription>Please enter your username and password to login</SheetDescription>
-                </SheetHeader>
-              </SheetContent>
-            </Sheet>
+        <Sheet>
+          <SheetTrigger>
+            <Button variant="ghost">Register</Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>User Registration</SheetTitle>
+              {RegisterForm()}
+              <SheetDescription>Please fill in the following fields to register a new user</SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+        <Sheet>
+          <SheetTrigger>
+            <Button variant="ghost">Login</Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Please Log In</SheetTitle>
+              <SheetDescription>Please enter your username and password to login</SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
       </>
     )
   }
@@ -117,7 +119,6 @@ const Header: React.FC = () => {
                   <Button variant="link" className="block mb-2">{link.name}</Button>
                 </Link>
               ))}
-
             </SheetContent>
           </Sheet>
         </div>
