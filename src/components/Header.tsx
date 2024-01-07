@@ -13,6 +13,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
 import Link from 'next/link';
 import Image from 'next/image';
 import {useRouter} from 'next/router';
@@ -53,7 +54,7 @@ export default function Header() {
   }
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#223c92'}}>
+    <AppBar position="static" sx={{backgroundColor: 'primary.main'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
@@ -70,73 +71,75 @@ export default function Header() {
               </Link>
             ))}
           </Box>
-            <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon/>
-              </IconButton>
+          <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon/>
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: {xs: 'block', md: 'none'},
+              }}
+            >
+              {links.map((page) => (
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.name}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+
+          <Box sx={{flexGrow: 0}}>
+            <>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                  <Avatar alt="User Avatar" sx={{backgroundColor: 'primary.light'}}>
+                    <PersonIcon/>
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
               <Menu
+                sx={{mt: '45px'}}
                 id="menu-appbar"
-                anchorEl={anchorElNav}
+                anchorEl={anchorElUser}
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
                 keepMounted
                 transformOrigin={{
                   vertical: 'top',
-                  horizontal: 'left',
+                  horizontal: 'right',
                 }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: {xs: 'block', md: 'none'},
-                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
               >
-                {links.map((page) => (
-                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page.name}</Typography>
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
-            </Box>
-
-          <Box sx={{flexGrow: 0}}>
-              <>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                    <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg"/>
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{mt: '45px'}}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </>
+            </>
           </Box>
         </Toolbar>
       </Container>

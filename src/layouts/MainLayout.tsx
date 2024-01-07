@@ -1,6 +1,7 @@
 import React, {ReactNode, useEffect} from 'react';
 import {useRouter} from 'next/router'
 import Header from '@/components/Header';
+import Copyright from "@/components/Copyright";
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -23,6 +24,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({children}) => {
       <main className="flex-grow mx-auto px-2 py-2">
         {children}
       </main>
+      <footer><Copyright/></footer>
     </div>
   );
 };
