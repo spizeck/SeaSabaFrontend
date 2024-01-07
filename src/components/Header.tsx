@@ -11,7 +11,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import {Button} from "@/components/ui/button"
-import {RegisterForm} from "@/components/forms/register"
 
 const Header: React.FC = () => {
 
@@ -54,29 +53,12 @@ const Header: React.FC = () => {
     }
     return (
       <>
-        <Sheet>
-          <SheetTrigger>
-            <Button variant="ghost">Register</Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>User Registration</SheetTitle>
-              {RegisterForm()}
-              <SheetDescription>Please fill in the following fields to register a new user</SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
-        <Sheet>
-          <SheetTrigger>
-            <Button variant="ghost">Login</Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Please Log In</SheetTitle>
-              <SheetDescription>Please enter your username and password to login</SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
+        <Link href="/signin">
+          <Button variant="ghost">Sign In</Button>
+        </Link>
+        <Link href="/signup">
+          <Button variant="ghost">Sign Up</Button>
+        </Link>
       </>
     )
   }
