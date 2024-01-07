@@ -1,112 +1,145 @@
-import React from 'react'
-import Image from 'next/image'
-import Link from "next/link"
-import {FaBars} from 'react-icons/fa'
+import * as React from 'react';
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import {Button} from "@/components/ui/button"
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+  Container,
+  Button,
+  Avatar,
+  Tooltip,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import Link from 'next/link';
+import Image from 'next/image';
+import {useRouter} from 'next/router';
 
-const Header: React.FC = () => {
+const links = [
+  {name: 'Home', link: '/'},
+  {name: 'About', link: '/about'},
+  {name: 'Group Contracts', link: '/group-contracts'},
+]
 
-  const links = [
-    {
-      name: 'Home',
-      link: '/'
-    },
-    {
-      name: 'About',
-      link: '/about'
-    },
-    {
-      name: 'Group Contracts',
-      link: '/group-contracts'
-    },
-  ]
+const settings = ['Preferences', 'Logout']
 
-  const renderAuthButtons = () => {
-    const isLoggedIn = false
-    // TODO: get this from session
-    if (isLoggedIn) {
-      return (
-        <>
-          <Sheet>
-            <SheetTrigger>
-              <Button variant="ghost">Preferences</Button>
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>User Preferences</SheetTitle>
-                <SheetDescription>Manage your user preferences</SheetDescription>
-              </SheetHeader>
-            </SheetContent>
-          </Sheet>
-          <Button variant="ghost" onClick={() => {
-          }}>Logout</Button>
-        </>
-      )
+export default function Header() {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+  const router = useRouter();
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleMenuClick = (page: string) => {
+    handleCloseUserMenu();
+    if (page === 'Preferences') {
+      router.push('/preferences')
+    } else if (page === 'Logout') {
+      router.push('/logout')
     }
-    return (
-      <>
-        <Link href="/signin">
-          <Button variant="ghost">Sign In</Button>
-        </Link>
-        <Link href="/signup">
-          <Button variant="ghost">Sign Up</Button>
-        </Link>
-      </>
-    )
   }
 
   return (
-    <header className="bg-blue-950 text-white p-4 border-b-2">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center">
-          <div className="nav-logo">
-            <Link href="/">
-              <Image src="/WhiteLogo.png" alt="logo" width={250} height={150}/>
-            </Link>
-          </div>
-          <div className="hidden md:flex px-4">
+    <AppBar position="static" sx={{ backgroundColor: '#223c92'}}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+            <Box sx={{py: 2, pr: 2}}>
+              <Link href="/" passHref>
+                <Image src="/WhiteLogo.png" alt="logo" width={250} height={150}/>
+              </Link>
+            </Box>
             {links.map((link) => (
-              <Link href={link.link} key={link.name}>
-                <Button variant="ghost">{link.name}</Button>
+              <Link href={link.link} key={link.name} passHref>
+                <Button sx={{my: 2, color: 'white', display: 'block', py: 2}}>
+                  {link.name}
+                </Button>
               </Link>
             ))}
-          </div>
-        </div>
+          </Box>
+            <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon/>
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: {xs: 'block', md: 'none'},
+                }}
+              >
+                {links.map((page) => (
+                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
 
-        <div className="hidden md:flex">
-          {renderAuthButtons()}
-        </div>
-
-
-        <div className="md:hidden flex items-center">
-          <div className="p-4 flex-grow">
-            {renderAuthButtons()}
-          </div>
-          <Sheet>
-            <SheetTrigger className="p-4" aria-label="Menu"><FaBars/></SheetTrigger>
-            <SheetContent side='top'>
-              <SheetHeader>
-                <SheetTitle>Navigation</SheetTitle>
-              </SheetHeader>
-              {links.map((link) => (
-                <Link href={link.link} key={link.name}>
-                  <Button variant="link" className="block mb-2">{link.name}</Button>
-                </Link>
-              ))}
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-    </header>
+          <Box sx={{flexGrow: 0}}>
+              <>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                    <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg"/>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{mt: '45px'}}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
-};
-
-export default Header;
+}
